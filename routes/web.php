@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Landlord\DashboardController as LandlordDashboardController;
+use App\Http\Controllers\Tenant\DashboardController as TenantDashboardController;
+use App\Http\Controllers\Bailiff\DashboardController as BailiffDashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,7 +28,7 @@ Route::middleware(['auth', 'role:admin'])
     ->name('admin.')
     ->group(function () {
 
-        Route::get('/dashboard', [DashboardController::class, 'index'])
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])
             ->name('dashboard');
 
     });
@@ -33,7 +37,7 @@ Route::middleware(['auth', 'role:landlord'])
     ->prefix('landlord')
     ->name('landlord.')
     ->group(function () {
-        Route::get('/dashboard', [DashboardController::class, 'index'])
+        Route::get('/dashboard', [LandlordDashboardController::class, 'index'])
             ->name('dashboard');
 
     }); 
@@ -44,7 +48,7 @@ Route::middleware(['auth', 'role:landlord'])
     ->name('tenant.')
     ->group(function () {
 
-        Route::get('/dashboard', [DashboardController::class, 'index'])
+        Route::get('/dashboard', [TenantDashboardController::class, 'index'])
             ->name('dashboard');
 
     });
@@ -55,7 +59,7 @@ Route::middleware(['auth', 'role:landlord'])
     ->name('bailiff.')
     ->group(function () {
 
-        Route::get('/dashboard', [DashboardController::class, 'index'])
+        Route::get('/dashboard', [BailiffDashboardController::class, 'index'])
             ->name('dashboard');
 
     });
