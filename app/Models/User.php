@@ -34,4 +34,33 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function properties()
+{
+    return $this->hasMany(Property::class);
+}
+
+
+public function rentalRequests()
+{
+    return $this->hasMany(RentalRequest::class,'tenant_id');
+}
+
+public function receivedRequests()
+{
+    return $this->hasMany(RentalRequest::class,'landlord_id');
+}
+
+
+
+public function landlordContracts()
+{
+    return $this->hasMany(LeaseContract::class,'landlord_id');
+}
+
+public function tenantContracts()
+{
+    return $this->hasMany(LeaseContract::class,'tenant_id');
+}
+
 }
