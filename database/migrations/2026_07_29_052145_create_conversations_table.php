@@ -9,30 +9,21 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('conversations', function (Blueprint $table) {
-            $table->id();
-            
-            // Ajoute ces 3 colonnes
-            $table->foreignId('property_id')
-                  ->constrained()
-                  ->cascadeOnDelete();
-                  
-            $table->foreignId('landlord_id')
-                  ->constrained('users')
-                  ->cascadeOnDelete();
-                  
-            $table->foreignId('tenant_id')
-                  ->constrained('users')
-                  ->cascadeOnDelete();
-            
-            $table->timestamps();
-            
-            // Ajoute des index pour les performances
-            $table->index(['property_id', 'tenant_id', 'landlord_id']);
-        });
-    }
+public function up(): void
+{
+    Schema::create('conversations', function (Blueprint $table) {
+
+        $table->id();
+
+        $table->foreignId('property_id')->constrained()->cascadeOnDelete();
+
+        $table->foreignId('landlord_id')->constrained('users')->cascadeOnDelete();
+
+        $table->foreignId('tenant_id')->constrained('users')->cascadeOnDelete();
+
+        $table->timestamps();
+    });
+}
 
     /**
      * Reverse the migrations.

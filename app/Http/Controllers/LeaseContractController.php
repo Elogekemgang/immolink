@@ -61,6 +61,8 @@ class LeaseContractController extends Controller
         ]);
 
         $user = Auth::user();
+        
+        $leaseContract->refresh();
 
         if (
             $user->hasRole('landlord') &&

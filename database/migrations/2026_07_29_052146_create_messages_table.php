@@ -9,13 +9,29 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('messages', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+   public function up(): void
+{
+    Schema::create('messages', function (Blueprint $table) {
+
+        $table->id();
+
+        $table->foreignId('conversation_id')
+              ->constrained()
+              ->cascadeOnDelete();
+
+        $table->foreignId('sender_id')
+              ->constrained('users')
+              ->cascadeOnDelete();
+
+        $table->text('message')->nullable();
+
+        $table->string('attachment')->nullable();
+
+        $table->boolean('is_read')->default(false);
+
+        $table->timestamps();
+    });
+}
 
     /**
      * Reverse the migrations.

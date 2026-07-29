@@ -7,6 +7,8 @@ use App\Models\Message;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Events\MessageSent;
+
 
 class ConversationController extends Controller
 {
@@ -73,7 +75,7 @@ class ConversationController extends Controller
 
         ]);
 
-        Message::create([
+        $message = Message::create([
 
             'conversation_id' => $conversation->id,
 
@@ -82,6 +84,8 @@ class ConversationController extends Controller
             'message' => $request->message
 
         ]);
+
+        broadcast(new MessageSent($message))->toOthers();
 
         return back();
     }
