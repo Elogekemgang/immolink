@@ -15,7 +15,7 @@
             </p>
         </div>
 
-        <a href="{{ route('properties.create') }}"
+        <a href="{{ route('landlord.properties.create') }}"
            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg">
 
             + Nouvelle annonce
@@ -139,7 +139,7 @@
                         <div class="flex justify-center gap-3">
 
                             <a
-                                href="{{ route('properties.show',$property) }}"
+                                href="{{ route('landlord.properties.show',$property) }}"
                                 class="text-green-600">
 
                                 Voir
@@ -147,7 +147,7 @@
                             </a>
 
                             <a
-                                href="{{ route('properties.edit',$property) }}"
+                                href="{{ route('landlord.properties.edit',$property) }}"
                                 class="text-blue-600">
 
                                 Modifier
@@ -156,7 +156,7 @@
 
                             <form
                                 method="POST"
-                                action="{{ route('properties.destroy',$property) }}">
+                                action="{{ route('landlord.properties.destroy',$property) }}">
 
                                 @csrf
 

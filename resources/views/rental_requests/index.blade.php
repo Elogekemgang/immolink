@@ -124,7 +124,7 @@
 
                             <form
                                 method="POST"
-                                action="{{ route('rental-requests.accept',$request) }}">
+                                action="{{ route('landlord.rental-requests.accept',$request) }}">
 
                                 @csrf
 
@@ -141,7 +141,7 @@
 
                             <form
                                 method="POST"
-                                action="{{ route('rental-requests.reject',$request) }}">
+                                action="{{ route('landlord.rental-requests.reject',$request) }}">
 
                                 @csrf
 

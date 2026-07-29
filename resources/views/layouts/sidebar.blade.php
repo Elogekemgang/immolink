@@ -39,21 +39,21 @@
 
         </a>
 
-        <a href="{{ route('properties.index') }}"
+        <a href="{{ route('landlord.properties.index') }}"
            class="block px-6 py-3 hover:bg-slate-800">
 
             🏠 Mes annonces
 
         </a>
 
-        <a href="{{ route('properties.create') }}"
+        <a href="{{ route('landlord.properties.create') }}"
            class="block px-6 py-3 hover:bg-slate-800">
 
             ➕ Publier une annonce
 
         </a>
 
-        <a href="{{ route('rental-requests.index') }}"
+        <a href="{{ route('landlord.rental-requests.index') }}"
            class="block px-6 py-3 hover:bg-slate-800">
 
             📩 Demandes

@@ -6,8 +6,11 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+
+
     public function up(): void
     {
+
         Schema::create('properties', function (Blueprint $table) {
 
             $table->id();
@@ -17,13 +20,13 @@ return new class extends Migration
             $table->string('title');
 
             $table->text('description');
-
+            
             $table->enum('type', [
                 'house',
                 'apartment',
                 'studio',
                 'land',
-                'office'
+                'office',
             ]);
 
             $table->decimal('price', 12, 2);
@@ -40,21 +43,21 @@ return new class extends Migration
 
             $table->boolean('parking')->default(false);
 
-            $table->decimal('surface',8,2)->nullable();
+            $table->decimal('surface', 8, 2)->nullable();
 
             $table->string('city');
 
             $table->string('district');
 
-$table->text('address');
-            $table->decimal('latitude',10,7)->nullable();
+            $table->text('address');
+            $table->decimal('latitude', 10, 7)->nullable();
 
-            $table->decimal('longitude',10,7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
 
-            $table->enum('status',[
+            $table->enum('status', [
                 'available',
                 'rented',
-                'pending'
+                'pending',
             ])->default('available');
 
             $table->timestamps();

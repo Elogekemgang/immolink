@@ -63,4 +63,19 @@ public function tenantContracts()
     return $this->hasMany(LeaseContract::class,'tenant_id');
 }
 
+public function sentMessages()
+{
+    return $this->hasMany(Message::class,'sender_id');
+}
+
+public function landlordConversations()
+{
+    return $this->hasMany(Conversation::class,'landlord_id');
+}
+
+public function tenantConversations()
+{
+    return $this->hasMany(Conversation::class,'tenant_id');
+}
+
 }

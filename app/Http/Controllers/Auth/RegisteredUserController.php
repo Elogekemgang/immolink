@@ -57,6 +57,7 @@ $user->assignRole($request->user_type);
 
         return match ($user->user_type) {
     'landlord' => redirect()->route('landlord.dashboard'),
+    // 'tenant' => redirect()->route('tenant.dashboard'),
     'tenant' => redirect()->route('tenant.dashboard'),
     default => redirect()->route('dashboard'),
 };

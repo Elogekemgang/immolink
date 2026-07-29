@@ -6,6 +6,7 @@ use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePropertyRequest;
+Use Illuminate\Support\Str;
 
 class PropertyController extends Controller
 {
@@ -35,6 +36,12 @@ class PropertyController extends Controller
      */
 public function store(StorePropertyRequest $request)    {
         $data = $request->validated();
+
+                // Génère le slug à partir du titre
+        $slug = Str::slug($data['title']);
+        
+        // Assure que le slug est unique
+        $slug = $this->generateUniqueSlug($slug);
 
         $property = Property::create([
 
@@ -67,29 +74,28 @@ public function store(StorePropertyRequest $request)    {
     'district' => $data['district'],
 
     'address' => $data['address'],
+    
+    'slug' => $slug, // ← AJOUT DU SLUG
 
 ]);
 
-    foreach ($request->file('images') as $image) {
+    foreach ($request->file('images') as $index => $image) {
 
-        $path = $image->store('properties', 'public');
+    $path = $image->store('properties', 'public');
 
-        $property->images()->create([
+    $property->images()->create([
 
-            'image' => $path,
+        'image' => $path,
 
-            'is_primary' => $position == 1,
+        'is_primary' => $index === 0,
 
-            'position' => $position
+        'position' => $index + 1,
 
-        ]);
-
-        $position++;
-
-    }
+    ]);
+}
 
         return redirect()
-            ->route('properties.index')
+            ->route('landlord.properties.index')
             ->with('success', 'Bien ajouté avec succès.');
     }
 
@@ -145,6 +151,14 @@ public function store(StorePropertyRequest $request)    {
             'address'=>'required'
 
         ]);
+        
+
+                // Génère un nouveau slug si le titre change
+        $slug = $property->slug;
+        if ($request->title !== $property->title) {
+            $slug = Str::slug($request->title);
+            $slug = $this->generateUniqueSlug($slug, $property->id);
+        }
 
         $property->update([
 
@@ -180,10 +194,12 @@ public function store(StorePropertyRequest $request)    {
 
             'longitude'=>$request->longitude,
 
+            'slug'=>$slug,
+
         ]);
 
         return redirect()
-            ->route('properties.index')
+            ->route('landlord.properties.index')
             ->with('success','Bien modifié.');
     }
 
@@ -197,10 +213,29 @@ public function store(StorePropertyRequest $request)    {
         $property->delete();
 
         return redirect()
-            ->route('properties.index')
+            ->route('landlord.properties.index')
             ->with('success','Bien supprimé.');
     }
 
+    /**
+     * Génère un slug unique
+     */
+    private function generateUniqueSlug($slug, $excludeId = null)
+    {
+        $originalSlug = $slug;
+        $count = 1;
+
+        while (Property::where('slug', $slug)
+            ->when($excludeId, function ($query) use ($excludeId) {
+                return $query->where('id', '!=', $excludeId);
+            })
+            ->exists()
+        ) {
+            $slug = $originalSlug . '-' . $count++;
+        }
+
+        return $slug;
+    }
 
 
     public function createStep1()

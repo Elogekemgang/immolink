@@ -19,7 +19,7 @@
         </p>
 
         <form
-            action="{{ route('rental-requests.store',$property) }}"
+            action="{{ route('tenant.rental-requests.store',$property) }}"
             method="POST">
 
             @csrf
@@ -43,7 +43,7 @@
             <div class="mt-8 flex justify-end">
 
                 <button
-                    class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg">
+                    class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg">
 
                     Envoyer la demande
 

@@ -75,12 +75,23 @@
                     @role('tenant')
 
                         <a
-                            href="{{ route('rental-requests.create',$property) }}"
+                            href="{{ route('tenant.rental-requests.create',$property) }}"
                             class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg">
 
                             Demander cette location
 
                         </a>
+                        <form action="{{ route('messages.start', $property) }}" method="POST" class="inline-block">
+
+    @csrf
+
+    <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg">
+
+        Contacter le bailleur
+
+    </button>
+
+</form>
 
                     @endrole
 

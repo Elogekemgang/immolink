@@ -1,11 +1,12 @@
 <?php
-
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Landlord;
 
 use App\Models\Property;
 use App\Models\RentalRequest;
 use App\Models\LeaseContract;
 use Illuminate\Support\Facades\Auth;
+
+use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
@@ -46,7 +47,7 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
-        return view('dashboard.landlord', compact(
+        return view('landlord.dashboard', compact(
 
             'totalProperties',
 
@@ -66,47 +67,4 @@ class DashboardController extends Controller
 
         ));
     }
-
-
-    public function tenant()
-{
-    $user = auth()->user();
-
-    $totalRequests = RentalRequest::where(
-        'tenant_id',
-        $user->id
-    )->count();
-
-    $acceptedRequests = RentalRequest::where(
-        'tenant_id',
-        $user->id
-    )
-    ->where('status','accepted')
-    ->count();
-
-    $activeContracts = LeaseContract::where(
-        'tenant_id',
-        $user->id
-    )
-    ->where('status','active')
-    ->count();
-
-    $latestProperties = Property::with('mainImage')
-        ->where('status','available')
-        ->latest()
-        ->take(6)
-        ->get();
-
-    return view(
-        'dashboard.tenant',
-        compact(
-            'totalRequests',
-            'acceptedRequests',
-            'activeContracts',
-            'latestProperties'
-        )
-    );
-}
-
-
 }

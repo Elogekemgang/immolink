@@ -11,7 +11,7 @@
         </h2>
 
 <form
-    action="{{ route('properties.store') }}"
+    action="{{ route('landlord.properties.store') }}"
     method="POST"
     enctype="multipart/form-data">
             @csrf
