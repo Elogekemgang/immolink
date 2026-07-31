@@ -9,6 +9,9 @@ use App\Http\Controllers\Bailiff\DashboardController as BailiffDashboardControll
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\LeaseContractController;
 use App\Http\Controllers\RentalRequestController;
+use App\Http\Controllers\DisputeController;
+use App\Http\Controllers\Bailiff\ReportController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -149,6 +152,96 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('role:tenant')
         ->name('messages.start');
 });
+
+
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::resource('disputes',DisputeController::class);
+
+});
+
+
+
+
+Route::prefix('bailiff')
+    ->middleware(['auth', 'role:bailiff'])
+    ->name('bailiff.')
+    ->group(function () {
+
+            Route::get('/dashboard', [BailiffDashboardController::class, 'index'])
+            ->name('dashboard');
+
+
+            //  Route::get('/profile', [BailiffDashboardController::class, 'index'])
+            // ->name('baillif.profile');
+
+        // Routes pour les litiges
+        Route::get('/disputes', [DisputeController::class, 'index'])
+            ->name('disputes.index');
+
+                    Route::get('/reports', [DisputeController::class, 'index'])  // ← AJOUTÉ
+            ->name('report.index');  // ← AJOUT
+
+        // Routes pour les litiges
+        Route::get('/disputes', [DisputeController::class, 'index'])
+            ->name('disputes.index');
+            
+        Route::get('/disputes/{dispute}', [DisputeController::class, 'show'])
+            ->name('disputes.show');
+
+        Route::patch('/disputes/{dispute}/accept', [DisputeController::class, 'accept'])
+            ->name('disputes.accept');
+            
+        Route::patch('/disputes/{dispute}/decline', [DisputeController::class, 'decline'])
+            ->name('disputes.decline');
+
+        // Routes pour les rapports
+        Route::get('/disputes/{dispute}/report', [DisputeController::class, 'create'])
+            ->name('report.create');
+            
+        Route::post('/disputes/{dispute}/report', [DisputeController::class, 'store'])
+            ->name('report.store');
+    });
+
+
+
+
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/conversations',
+        [ConversationController::class,'index'])
+        ->name('conversations.index');
+
+    Route::get('/conversations/{conversation}',
+        [ConversationController::class,'show'])
+        ->name('conversations.show');
+
+    Route::post('/conversations/{conversation}/message',
+        [ConversationController::class,'storeMessage'])
+        ->name('conversations.storeMessage');
+
+});
+
+
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::resource('disputes', DisputeController::class);
+
+    Route::patch('/disputes/{dispute}/accept',
+        [DisputeController::class,'accept'])
+        ->name('disputes.accept');
+
+    Route::patch('/disputes/{dispute}/decline',
+        [DisputeController::class,'decline'])
+        ->name('disputes.decline');
+
+});
+
+
+
 
 
 // Routes d'authentification Laravel Breeze/Jetstream

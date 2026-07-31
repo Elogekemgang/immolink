@@ -55,4 +55,9 @@ class LeaseContract extends Model
     {
         return $this->belongsTo(RentalRequest::class);
     }
+
+    public function disputes()
+{
+    return $this->hasMany(Dispute::class);
+}
 }

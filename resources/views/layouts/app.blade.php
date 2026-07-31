@@ -17,10 +17,25 @@
 
 <div class="flex h-screen overflow-hidden">
 
-    {{-- Sidebar --}}
-    @include('layouts.sidebar')
+    {{-- Sidebar selon le rôle --}}
 
-    {{-- Contenu --}}
+    @role('admin')
+        @include('layouts.admin_sidebar')
+    @endrole
+
+    @role('landlord')
+        @include('layouts.landlord_sidebar')
+    @endrole
+
+    @role('tenant')
+        @include('layouts.tenant_sidebar')
+    @endrole
+
+    @role('bailiff')
+        @include('layouts.bailiff_sidebar')
+    @endrole
+
+
     <div class="flex-1 flex flex-col">
 
         {{-- Navbar --}}

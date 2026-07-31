@@ -210,6 +210,14 @@
 
                 </button>
 
+                <a
+href="{{ route('disputes.create',['lease_contract'=>$leaseContract->id]) }}"
+class="bg-red-600 text-white px-6 py-3 rounded">
+
+Déclarer un litige
+
+</a>
+
             </div>
 
         </div>
