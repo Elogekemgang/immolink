@@ -66,7 +66,11 @@
 
                 <h3 class="font-semibold text-gray-800">
 
-                    {{ Auth::user()->name }}
+                    @if (Auth::check())
+                        {{ Auth::user()->name }}
+                    @else
+                        Invité
+                    @endif
 
                 </h3>
 
@@ -92,11 +96,17 @@
 
             </div>
 
-            <img
-                src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=2563eb&color=ffffff"
-                alt="Avatar"
-                class="w-12 h-12 rounded-full border-2 border-blue-500">
-
+            @auth
+                <img
+                    src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=2563eb&color=ffffff"
+                    alt="Avatar"
+                    class="w-12 h-12 rounded-full border-2 border-blue-500">
+            @else
+                <img
+                    src="https://ui-avatars.com/api/?name=Invité&background=2563eb&color=ffffff"
+                    alt="Avatar"
+                    class="w-12 h-12 rounded-full border-2 border-blue-500">
+            @endauth
         </div>
 
     </div>

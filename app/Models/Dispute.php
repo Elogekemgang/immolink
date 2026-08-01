@@ -18,7 +18,9 @@ class Dispute extends Model
 
         'description',
 
-        'status'
+        'status',
+        
+        'bailiff_status'
 
     ];
 
@@ -36,4 +38,15 @@ class Dispute extends Model
     {
         return $this->belongsTo(User::class,'bailiff_id');
     }
+
+    public function report()
+{
+    return $this->hasOne(BailiffReport::class);
+}
+
+public function leaseContract()
+{
+    return $this->belongsTo(LeaseContract::class);
+}
+
 }

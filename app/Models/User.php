@@ -78,4 +78,9 @@ public function tenantConversations()
     return $this->hasMany(Conversation::class,'tenant_id');
 }
 
+
+public function bailiffReports()
+{
+    return $this->hasMany(BailiffReport::class,'bailiff_id');
+}
 }

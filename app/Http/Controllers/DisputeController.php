@@ -140,7 +140,8 @@ class DisputeController extends Controller
             'contract.landlord',
             'contract.tenant',
             'opener',
-            'bailiff'
+            'bailiff',
+            'report'
         ]);
 
         $user = Auth::user();

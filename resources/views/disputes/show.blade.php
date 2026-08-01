@@ -106,51 +106,51 @@ Mission refusée.
 
 @endif
 
-<div class="flex gap-4 mt-10">
+<div class="flex flex-wrap gap-4 mt-10">
 
-<a
+    <a href="{{ route('disputes.index') }}"
+       class="bg-gray-700 text-white px-6 py-3 rounded">
 
-href="{{ route('disputes.index') }}"
+        Retour
 
-class="bg-gray-700 text-white px-6 py-3 rounded">
+    </a>
 
-Retour
+    @if($dispute->status == 'open')
 
-</a>
+        <a href="{{ route('disputes.edit',$dispute) }}"
+           class="bg-blue-600 text-white px-6 py-3 rounded">
 
-@if($dispute->status=='open')
+            Modifier
 
-<a
+        </a>
 
-href="{{ route('disputes.edit',$dispute) }}"
+        <form action="{{ route('disputes.destroy',$dispute) }}"
+              method="POST">
 
-class="bg-blue-600 text-white px-6 py-3 rounded">
+            @csrf
+            @method('DELETE')
 
-Modifier
+            <button
+                class="bg-red-600 text-white px-6 py-3 rounded">
 
-</a>
+                Supprimer
 
-<form
+            </button>
 
-action="{{ route('disputes.destroy',$dispute) }}"
+        </form>
 
-method="POST">
+    @endif
 
-@csrf
+    @if($dispute->status == 'resolved' && $dispute->report)
 
-@method('DELETE')
+        <a href="{{ route('bailiff-reports.pdf',$dispute->report) }}"
+           class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded">
 
-<button
+            📄 Télécharger le rapport PDF
 
-class="bg-red-600 text-white px-6 py-3 rounded">
+        </a>
 
-Supprimer
-
-</button>
-
-</form>
-
-@endif
+    @endif
 
 </div>
 

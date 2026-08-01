@@ -52,6 +52,8 @@
 
 </div>
 
+@include('components.chatbot')
+
 </body>
 
 </html>

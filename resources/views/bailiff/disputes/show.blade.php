@@ -100,7 +100,7 @@ Refuser
 @if($dispute->bailiff_status=='accepted')
 
 <a
-href="{{ route('bailiff.report.create',$dispute) }}"
+href="{{ route('bailiff-reports.create',$dispute) }}"
 class="bg-blue-600 text-white px-6 py-3 rounded inline-block mt-8">
 
 Rédiger le rapport

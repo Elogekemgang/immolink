@@ -242,6 +242,79 @@ Route::middleware(['auth'])->group(function () {
 
 
 
+use App\Http\Controllers\BailiffReportController;
+
+Route::middleware(['auth','role:bailiff'])
+    ->prefix('bailiff')
+    ->group(function () {
+
+        Route::get(
+            '/reports',
+            [BailiffReportController::class,'index']
+        )->name('bailiff-reports.index');
+
+        Route::get(
+            '/reports/create/{dispute}',
+            [BailiffReportController::class,'create']
+        )->name('bailiff-reports.create');
+
+        Route::post(
+            '/reports/create/{dispute}',
+            [BailiffReportController::class,'store']
+        )->name('bailiff-reports.store');
+
+        Route::get(
+            '/reports/{bailiffReport}',
+            [BailiffReportController::class,'show']
+        )->name('bailiff-reports.show');
+
+        Route::get(
+            '/reports/{bailiffReport}/edit',
+            [BailiffReportController::class,'edit']
+        )->name('bailiff-reports.edit');
+
+        Route::put(
+            '/reports/{bailiffReport}',
+            [BailiffReportController::class,'update']
+        )->name('bailiff-reports.update');
+
+        Route::patch(
+            '/reports/{bailiffReport}/submit',
+            [BailiffReportController::class,'submit']
+        )->name('bailiff-reports.submit');
+
+        // Route::get(
+        //     '/reports/{bailiffReport}/pdf',
+        //     [BailiffReportController::class,'pdf']
+        // )->name('bailiff-reports.pdf');
+
+    });
+
+    // Route PDF : Sortie du groupe 'bailiff' pour autoriser propriétaires et locataires
+// Note: On garde le préfixe 'bailiff' pour que l'URL reste identique.
+Route::middleware(['auth'])
+    ->prefix('bailiff')
+    ->group(function () {
+        Route::get('/reports/{bailiffReport}/pdf', [BailiffReportController::class,'pdf'])->name('bailiff-reports.pdf');
+    });
+
+
+
+    use App\Http\Controllers\AssistantController;
+
+Route::middleware('auth')->group(function(){
+
+    Route::post(
+
+        '/assistant/chat',
+
+        [AssistantController::class,'chat']
+
+    )->name('assistant.chat');
+
+});
+
+
 
 
 // Routes d'authentification Laravel Breeze/Jetstream
