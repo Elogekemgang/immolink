@@ -189,8 +189,9 @@
                     Retour
 
                 </a>
-
-                <form action="{{ route('contracts.sign', $leaseContract) }}" method="POST">
+                @if (!($leaseContract->tenant_signed && $leaseContract->landlord_signed))
+            
+                        <form action="{{ route('contracts.sign', $leaseContract) }}" method="POST">
 
                     @csrf
 
@@ -203,12 +204,18 @@
                     </button>
 
                 </form>
+                    @endif
 
-                <button class="bg-red-600 text-white px-6 py-3 rounded">
 
-                    Télécharger PDF
+                
 
-                </button>
+               <a
+href="{{ route('contracts.download',$leaseContract) }}"
+class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg">
+
+    Télécharger le contrat PDF
+
+</a>
 
                 <a
 href="{{ route('disputes.create',['lease_contract'=>$leaseContract->id]) }}"

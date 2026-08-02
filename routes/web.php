@@ -316,6 +316,16 @@ Route::middleware('auth')->group(function(){
 
 
 
+Route::middleware('auth')->group(function () {
+
+    Route::get(
+        '/contracts/{leaseContract}/download',
+        [LeaseContractController::class,'downloadPdf']
+    )->name('contracts.download');
+
+});
+
+
 
 // Routes d'authentification Laravel Breeze/Jetstream
 require __DIR__.'/auth.php';

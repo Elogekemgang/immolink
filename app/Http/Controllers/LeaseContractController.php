@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\LeaseContract;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class LeaseContractController extends Controller
 {
@@ -131,6 +132,33 @@ class LeaseContractController extends Controller
     return back()->with(
         'success',
         'Votre signature a été enregistrée.'
+    );
+}
+
+public function downloadPdf(LeaseContract $leaseContract)
+{
+    $leaseContract->load([
+
+        'property',
+
+        'tenant',
+
+        'landlord'
+
+    ]);
+
+    $pdf = Pdf::loadView(
+
+        'lease_contracts.pdf',
+
+        compact('leaseContract')
+
+    );
+
+    return $pdf->download(
+
+        'Contrat_ImmoLink_'.$leaseContract->id.'_'.$leaseContract->tenant->name.'_'.$leaseContract->landlord->name.'_'.$leaseContract->created_at->format('Y-m-d').'.pdf'
+
     );
 }
 }

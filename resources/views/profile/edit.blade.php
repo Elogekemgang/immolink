@@ -1,29 +1,71 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
+@section('content')
+
+<div class="max-w-6xl mx-auto">
+
+    <div class="bg-white rounded-2xl shadow-lg p-8">
+
+        <h1 class="text-3xl font-bold mb-8">
+
+            👤 Mon profil
+
+        </h1>
+
+        @if(session('status')=='profile-updated')
+
+            <div class="bg-green-100 border border-green-300 text-green-700 p-4 rounded-lg mb-8">
+
+                Profil mis à jour avec succès.
+
             </div>
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
+        @endif
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+
+            {{-- Informations personnelles --}}
+            <div>
+
+                <h2 class="text-xl font-bold mb-6">
+
+                    Informations personnelles
+
+                </h2>
+
+                @include('profile.partials.update-profile-information-form')
+
             </div>
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
+            {{-- Mot de passe --}}
+            <div>
+
+                <h2 class="text-xl font-bold mb-6">
+
+                    Sécurité
+
+                </h2>
+
+                @include('profile.partials.update-password-form')
+
             </div>
+
         </div>
+
+        <div class="mt-12">
+
+            <h2 class="text-xl font-bold text-red-600 mb-6">
+
+                Zone dangereuse
+
+            </h2>
+
+            @include('profile.partials.delete-user-form')
+
+        </div>
+
     </div>
-</x-app-layout>
+
+</div>
+
+@endsection
